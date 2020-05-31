@@ -2,10 +2,9 @@
 
 <br>
 
-<p><a href="/tweets">Delete Tweet</a></p>
-<form action="/tweets" method="post">
+<form action="/tweets/<%= @tweet.id %>" method="post">
   <input type="hidden" id="hidden" name="_method" value="delete" />
-  <input type="submit" value="Delet" id="delete" />
+  <input type="submit" value="Delete Tweet" id="delete" />
 </form>
 
 <br>

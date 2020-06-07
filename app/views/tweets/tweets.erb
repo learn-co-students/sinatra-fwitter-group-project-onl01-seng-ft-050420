@@ -1,0 +1,9 @@
+<p> Welcome, <%= current_user.username %> </p>
+
+<% if logged_in? %>
+  <% @tweets.each do |x| %>
+      <p><%= x.content %></p>
+  <% end %>
+<% else %>
+
+<%end %>

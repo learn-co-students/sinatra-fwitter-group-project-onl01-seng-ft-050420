@@ -1,0 +1,6 @@
+<h1>Dis the Users Index</h1>
+<% @users.each do |user|%>
+<h2><%= user.username %></h2>
+<p><%= user.email %></p>
+<p><%= user.password %></p>
+<% end %>

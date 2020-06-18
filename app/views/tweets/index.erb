@@ -1,0 +1,8 @@
+<%if logged_in?(session) %>
+    <h1>Welcome, <%= @user.username %></h1>
+    <p><% @tweets.each do |tweet| %></p>
+        <p><%= tweet.content %></p>
+    <% end %>
+<% else %>
+    <h2>You must be logged in to view tweets</h2>
+<% end %>

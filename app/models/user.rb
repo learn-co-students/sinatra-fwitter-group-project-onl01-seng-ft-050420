@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
   validates :email, presence: true
   validates :username, uniqueness: true
   has_many :tweets
+  def slug
+    slug = self.username.split(" ")
+    slug.join("-")
+  end
 end

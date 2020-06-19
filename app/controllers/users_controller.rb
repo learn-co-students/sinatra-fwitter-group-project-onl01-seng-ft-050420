@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   get '/users/:slug' do
     @user = User.find_by(username: slug_convert(params[:slug]))
     erb :'/users/show'
@@ -55,10 +54,5 @@ class UsersController < ApplicationController
     redirect to '/login'
   end
 
-  helpers do
-    def slug_convert(slug)
-      username = slug.username.split("-")
-      username.join(" ")
-    end
-  end
+
 end

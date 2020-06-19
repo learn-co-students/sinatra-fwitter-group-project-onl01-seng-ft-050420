@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+
+  get '/users/:slug' do
+    @user = User.find_by(username: slug_convert(params[:slug]))
+    erb :'/users/show'
+  end
+
   get '/signup' do
     if !session[:user_id]
       erb :'users/new'
@@ -24,29 +30,35 @@ class UsersController < ApplicationController
     end
   end
 
-  post '/login' do 
+  post '/login' do
     user = User.find_by(username: params[:username])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       redirect to '/tweets'
     else
-      @error = "wrong username or password"
       redirect '/login'
     end
   end
 
-  get '/logout' do 
+  get '/logout' do
     if !session[:user_id]
       redirect '/login'
     else
       session.clear
       redirect to '/login'
     end
-    
+
   end
 
-  post '/logout' do 
+  post '/logout' do
     session.clear
     redirect to '/login'
+  end
+
+  helpers do
+    def slug_convert(slug)
+      username = slug.username.split("-")
+      username.join(" ")
+    end
   end
 end

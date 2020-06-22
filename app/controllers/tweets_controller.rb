@@ -10,6 +10,7 @@ class TweetsController < ApplicationController
     end 
 
     get '/tweets/new' do #the form to create a new tweet 
+        binding.pry 
         erb :'/tweets/new'
     end 
 

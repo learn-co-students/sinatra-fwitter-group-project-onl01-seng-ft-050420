@@ -12,3 +12,18 @@
 
 
 
+<% Tweet.all.each do |t|%>
+<ul>
+
+<li> <%= t.user.username%> said:  <%= t.content %> </li>
+</ul>
+<% end %>
+
+<br>
+<a href='/tweets/new'>New Tweet</a>
+<a href="/logout">Log out</a>
+
+
+
+
+

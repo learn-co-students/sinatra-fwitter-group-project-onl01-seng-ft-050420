@@ -10,7 +10,6 @@ class TweetsController < ApplicationController
     end 
 
     get '/tweets/new' do #the form to create a new tweet 
-        binding.pry 
         erb :'/tweets/new'
     end 
 
@@ -23,7 +22,10 @@ class TweetsController < ApplicationController
     end 
 
     post '/tweets' do #with get '/tweets/new' redirect to '/tweets'
-        #redirect to '/tweets'
+        user = User.find(session[:user_id])
+        user.tweets.build(content: params[:content])
+        user.save 
+        redirect to '/tweets'
     end 
 
     patch '/tweets/:id' do #update the tweet a redirect to single tweet page '/tweets/:id'

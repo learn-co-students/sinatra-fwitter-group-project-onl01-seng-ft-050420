@@ -1,6 +1,12 @@
 <h2>Welcome, <%= @user.username%> to The Latest Tweets</h2>
 
-<h3>Your Tweets</h3>
+<h3>Your Tweets TEST</h3>
+<%@user.tweets.all.each do |t|%>
+<ul>
+
+<li> <%= t.content %> </li>
+</ul>
+<% end %>
 
 <h3>Public Tweets</h3>
 

@@ -1,0 +1,8 @@
+<h1>Tweets</h1>
+<h2><%= "Welcome, #{Helpers.current_user(session).username}"%></h2>
+<% @tweets.each do |tweet| %>
+    <li><a href= "/tweets/<%=tweet.id%>"><%= tweet.content%></a></li>    
+<% end %>
+<p><a href="/tweets/new">New Tweet</a></p>
+<p><a href="/logout">Log Out</a></p>
+

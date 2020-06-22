@@ -1,0 +1,6 @@
+tweet1 = Tweet.create(content: "What a wonderful day")
+tweet2 = Tweet.create(content: "Everything is awesome")
+tweet3 = Tweet.create(content: "2020... what a year!")
+User.create(username: "Steveo14", email:"steveo@gmail.com", password_digest: "Disneyland")
+User.create(username: "EdithLavie", email:"edithlavie@gmail.com", password_digest: "Texas")
+User.create(username: "EthanS", email:"ethans@gmail.com", password_digest: "Legos")

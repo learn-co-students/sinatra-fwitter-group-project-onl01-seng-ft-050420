@@ -1,23 +1,13 @@
-<h2>Welcome, to The Latest Tweets</h2>
-<%binding.pry %>
+<h2>Welcome, <%=@user.username%></h2>
+
 <h3>Your Tweets</h3>
-<%@user.tweets.all.each do |t|%>
-<ul>
+<% @tweets.each do |tweet| %>
+  <h3><a href="/users/<%=tweet.user.slug%>"><%= tweet.user.username %></a> </h3>
+  <p><%= tweet.content %></p>
+  <a href="/tweets/<%=tweet.id%>">view tweet</a>
+  <br>
+  <% end %>
 
-<li> <%= t.content %> <- <a href="/tweets/<%=t.id%>"> See More </a> </li>
-</ul>
-<% end %>
-
-<h3>Public Tweets</h3>
-
-
-
-<% Tweet.all.each do |t|%>
-<ul>
-
-<li> <%= t.user.username%> said:  <%= t.content %> </li>
-</ul>
-<% end %>
 
 <br>
 <a href='/tweets/new'>New Tweet</a>

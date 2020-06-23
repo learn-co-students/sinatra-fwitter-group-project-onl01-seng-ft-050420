@@ -1,8 +1,13 @@
 class TweetsController < ApplicationController
+    configure do
+        enable :sessions
+        set :session_secret, "secret"
+      end
 
     get '/tweets' do #index page shows the users and every other tweet
-        if session[:id] != nil#if user is not logged in, redirect to '/login'
-            @user = User.find_by(id: session[:id])
+        if logged_in? #if user is not logged in, redirect to '/login'
+            @user = current_user 
+            @tweets = Tweet.all 
             erb :'/tweets/tweets'
         else  
             redirect to '/login'
@@ -10,38 +15,41 @@ class TweetsController < ApplicationController
     end 
 
     get '/tweets/new' do #the form to create a new tweet 
-        if session[:id] == nil
-            redirect to '/login'
-        else
+        if logged_in? 
             erb :'/tweets/new'
+        else 
+            redirect to '/login'
         end 
     end 
 
     get '/tweets/:id' do #show a single tweet
-        if session[:id] == nil
-            redirect to '/login'
+        if logged_in? 
+            @tweet = Tweet.find(params[:id])
+            erb :'/tweets/show_tweet'
         else
-           @tweet = Tweet.find(params[:id])
-           erb :'/tweets/show_tweet'
+            redirect to '/login'
         end 
     end 
 
-    get '/tweets/:id/edit' do #edit a single tweet 
-        if session[:id] == nil
-            redirect to '/login'
+    get '/tweets/:id/edit' do
+        if logged_in?
+            @tweet = Tweet.find_by_id(params[:id]) # slug helps to find by name instaed of ID
+            erb :'tweets/edit_tweet'
         else
-            @tweet = Tweet.find(params[:id])
-            erb :'/tweets/edit_tweet'
+            redirect to "/login"
         end
-    end 
+    end
 
     post '/tweets' do #with get '/tweets/new' redirect to '/tweets'
+        binding.pry 
         if params[:content] == "" 
             redirect to '/tweets/new'
         else
-            user = User.find(session[:id])
-            user.tweets.build(content: params[:content])
-            user.save 
+            @tweet = Tweet.create(content: params[:content], user: current_user)
+            # user = User.find(session[:id])
+            # user.tweets.build(content: params[:content])
+            # user.save 
+            binding.pry 
             redirect to '/tweets'
         end 
     end 

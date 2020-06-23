@@ -1,1 +1,19 @@
-<%= @tweet.content %>
+<% if is_logged_in? %>
+<%= @tweet.content %><br><br>
+
+<a href="<%=@tweet.user.id%>/edit"> Edit This Tweet </a>
+
+
+
+
+
+
+
+
+
+
+
+
+<% else %>
+<p>You are not logged in. Please <a href='/login'>log in</a> to view tweets </p>
+<% end %>

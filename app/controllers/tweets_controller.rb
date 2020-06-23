@@ -1,8 +1,8 @@
 class TweetsController < ApplicationController
 
     get '/tweets' do #index page shows the users and every other tweet
-        if session[:user_id] != nil#if user is not logged in, redirect to '/login'
-            @user = User.find_by(id: session[:user_id])
+        if session[:id] != nil#if user is not logged in, redirect to '/login'
+            @user = User.find_by(id: session[:id])
             erb :'/tweets/tweets'
         else  
             redirect to '/login'
@@ -10,24 +10,40 @@ class TweetsController < ApplicationController
     end 
 
     get '/tweets/new' do #the form to create a new tweet 
-        erb :'/tweets/new'
+        if session[:id] == nil
+            redirect to '/login'
+        else
+            erb :'/tweets/new'
+        end 
     end 
 
     get '/tweets/:id' do #show a single tweet
-        @tweet = Tweet.find(params[:id])
-        erb :'/tweets/show'
+        if session[:id] == nil
+            redirect to '/login'
+        else
+           @tweet = Tweet.find(params[:id])
+           erb :'/tweets/show_tweet'
+        end 
     end 
 
     get '/tweets/:id/edit' do #edit a single tweet 
-        @tweet = Tweet.find(params[:id])
-        erb :'/tweets/edit_tweet'
+        if session[:id] == nil
+            redirect to '/login'
+        else
+            @tweet = Tweet.find(params[:id])
+            erb :'/tweets/edit_tweet'
+        end
     end 
 
     post '/tweets' do #with get '/tweets/new' redirect to '/tweets'
-        user = User.find(session[:user_id])
-        user.tweets.build(content: params[:content])
-        user.save 
-        redirect to '/tweets'
+        if params[:content] == "" 
+            redirect to '/tweets/new'
+        else
+            user = User.find(session[:id])
+            user.tweets.build(content: params[:content])
+            user.save 
+            redirect to '/tweets'
+        end 
     end 
 
     patch '/tweets/:id' do #update the tweet a redirect to single tweet page '/tweets/:id'
@@ -39,9 +55,13 @@ class TweetsController < ApplicationController
     end 
 
     delete '/tweets/:id/delete' do #delete button should be found on show page
-        @tweet = Tweet.find(params[:id])
-        @tweet.destroy 
-        redirect to '/tweets'
+        if session[:id] == nil
+            redirect to '/login'
+        else
+            @tweet = Tweet.find(params[:id])
+            @tweet.destroy 
+            redirect to '/tweets'
+        end 
     end 
 
 end

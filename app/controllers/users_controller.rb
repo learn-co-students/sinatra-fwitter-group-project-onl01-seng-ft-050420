@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
     
     get '/login' do #display the log in form 
-        if session[:user_id] != nil 
+        if session[:id] != nil 
+            binding.pry 
             redirect to '/tweets'
         else
             erb :'/users/login'
@@ -9,7 +10,7 @@ class UsersController < ApplicationController
     end 
 
     get '/signup' do #display signup form 
-        if session[:user_id] != nil 
+        if session[:id] != nil 
             redirect to '/tweets'
         else
             erb :'/users/create_user'
@@ -17,21 +18,26 @@ class UsersController < ApplicationController
     end 
 
     get '/logout' do 
-        if session[:user_id] == nil 
-            redirect to '/'
+        if session[:id] == nil 
+            redirect to '/login'
         else 
             erb :'/users/logout'
         end 
     end 
 
-    # get '/show' do 
-    #     erb :'/users/show'
-    # end 
+    get '/show' do 
+        if session[:id] == nil 
+            redirect to '/login'
+        else 
+            @user = User.find_by(id:session[:id])
+            erb :'/users/show'
+        end 
+    end 
 
     post '/login' do #log the user in. Assign user_id to session[:hash]
         user = User.find_by(username: params[:username])
         if user && user.authenticate(params[:password])
-            session[:user_id] = user.id 
+            session[:id] = user.id 
             redirect to '/tweets'
         else  
             redirect to '/login'
@@ -43,7 +49,7 @@ class UsersController < ApplicationController
             redirect '/signup'
         else
             user = User.create(params)
-            session[:user_id] = user.id
+            session[:id] = user.id
             redirect to "/tweets"
         end
     end 

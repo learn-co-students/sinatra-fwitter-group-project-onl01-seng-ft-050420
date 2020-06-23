@@ -19,7 +19,6 @@ class TweetsController < ApplicationController
     end 
 
     get '/tweets/:id/edit' do #edit a single tweet 
-        binding.pry 
         @tweet = Tweet.find(params[:id])
         erb :'/tweets/edit_tweet'
     end 
@@ -32,11 +31,11 @@ class TweetsController < ApplicationController
     end 
 
     patch '/tweets/:id' do #update the tweet a redirect to single tweet page '/tweets/:id'
-        binding.pry 
+      
         @tweet = Tweet.find(params[:id])
         @tweet.content = params[:content]
         @tweet.save 
-        redirect to '/tweets/:id'
+        redirect to "/tweets/#{@tweet.id}"
     end 
 
     delete '/tweets/:id/delete' do #delete button should be found on show page

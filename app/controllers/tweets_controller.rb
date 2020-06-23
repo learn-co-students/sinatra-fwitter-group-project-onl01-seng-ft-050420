@@ -39,7 +39,9 @@ class TweetsController < ApplicationController
     end 
 
     delete '/tweets/:id/delete' do #delete button should be found on show page
-        #redirect to '/tweets'
+        @tweet = Tweet.find(params[:id])
+        @tweet.destroy 
+        redirect to '/tweets'
     end 
 
 end

@@ -1,7 +1,18 @@
 <h3><%= @user.username%></h3>
-<a href="/tweets/new">New Tweet</a>
-<%@user.tweets.each do |tweet| %>
-    <h3><%=tweet.content%><a href="/tweets/<%=tweet.id%>/edit">EDIT</a></h3>
-<%end%>
+    
+    <%if @user == @current_user%>
+        
+        <a href="/tweets/new">New Tweet</a>
+        <%@user.tweets.each do |tweet| %>
+            <h3><%=tweet.content%> <a href="/tweets/<%=tweet.id%>/edit">EDIT</a></h3>
+        <%end%>
 
-<a href="/logout">Log Out</a>
+    <%else %>
+
+        <%@user.tweets.each do |tweet| %>
+            <h3><%=tweet.content%></h3>
+        <%end%>
+    <%end%>
+<%if logged_in?%>
+    <a href="/logout">Log Out</a>
+<%end%>

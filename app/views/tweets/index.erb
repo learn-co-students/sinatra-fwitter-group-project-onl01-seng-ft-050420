@@ -1,5 +1,7 @@
-<h2>Welcome, <%= @user.username %>!</h2>
-    <% @tweets.each do |tweet| %>
-    <h3> <%= tweet.user_id %></h3>
-    <%= puts tweet.content %>
+<p> Welcome, <%= current_user.username %>
+<h2> Tweets </h2>
+<% @tweets.each do |tweet| %>
+  <div>
+    <%= tweet.content %>
+  </div>
 <% end %>
